@@ -18,12 +18,13 @@ use std::{
         Arc,
     },
 };
+use reqwest_middleware::{ClientBuilder, ClientWithMiddleware};
 
 /// HTTP Transport
 #[derive(Clone, Debug)]
 pub struct Http {
     // Client is already an Arc so doesn't need to be part of inner.
-    client: Client,
+    client: ClientWithMiddleware,
     inner: Arc<Inner>,
 }
 
@@ -49,11 +50,11 @@ impl Http {
         let client = builder
             .build()
             .map_err(|err| Error::Transport(TransportError::Message(format!("failed to build client: {}", err))))?;
-        Ok(Self::with_client(client, url.parse()?))
+        Ok(Self::with_client(ClientBuilder::new(client).build(), url.parse()?))
     }
 
     /// Like `new` but with a user provided client instance.
-    pub fn with_client(client: Client, url: Url) -> Self {
+    pub fn with_client(client: ClientWithMiddleware, url: Url) -> Self {
         Self {
             client,
             inner: Arc::new(Inner {
@@ -67,13 +68,13 @@ impl Http {
         self.inner.id.fetch_add(1, Ordering::AcqRel)
     }
 
-    fn new_request(&self) -> (Client, Url) {
+    fn new_request(&self) -> (ClientWithMiddleware, Url) {
         (self.client.clone(), self.inner.url.clone())
     }
 }
 
 // Id is only used for logging.
-async fn execute_rpc<T: DeserializeOwned>(client: &Client, url: Url, request: &Request, id: RequestId) -> Result<T> {
+async fn execute_rpc<T: DeserializeOwned>(client: &ClientWithMiddleware, url: Url, request: &Request, id: RequestId) -> Result<T> {
     log::debug!("[id:{}] sending request: {:?}", id, serde_json::to_string(&request)?);
     let response = client
         .post(url)
