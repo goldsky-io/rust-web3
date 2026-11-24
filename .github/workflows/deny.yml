@@ -16,15 +16,15 @@ jobs:
     runs-on:            ubuntu-latest
     steps:
       - name:           Cancel Previous Runs
-        uses:           styfle/cancel-workflow-action@0.4.1
+        uses:           styfle/cancel-workflow-action@43da6c68d1f8edfdd25e3a96440e733723d533f6 # 0.4.1
         with:
           access_token: ${{ github.token }}
       - name:           Checkout sources & submodules
-        uses:           actions/checkout@master
+        uses:           actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
         with:
           fetch-depth:  5
           submodules:   recursive
       - name:           Cargo deny
-        uses:           EmbarkStudios/cargo-deny-action@v1
+        uses:           EmbarkStudios/cargo-deny-action@3f4a782664881cf5725d0ffd23969fcce89fd868 # v1
         with:
           command:      "check --hide-inclusion-graph"
