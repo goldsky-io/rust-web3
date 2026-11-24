@@ -18,17 +18,17 @@ jobs:
       RUST_BACKTRACE:              full
     steps:
       - name:                      Cancel Previous Runs
-        uses:                      styfle/cancel-workflow-action@0.4.1
+        uses:                      styfle/cancel-workflow-action@43da6c68d1f8edfdd25e3a96440e733723d533f6 # 0.4.1
         with:
           access_token:            ${{ github.token }}
       - name:                      Checkout sources & submodules
-        uses:                      actions/checkout@master
+        uses:                      actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
         with:
           fetch-depth:             5
           submodules:              recursive
 ## Check Stage
       - name:                      Checking rust-stable
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
@@ -36,13 +36,13 @@ jobs:
 
 ## Test Stage
       - name:                      Testing rust-stable
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 test
           toolchain:               stable
           args:                    --all  --verbose
       - name:                      Testing rust-stable with arbitrary_precision
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 test
           toolchain:               stable
@@ -50,7 +50,7 @@ jobs:
 
 ## Build Stage
       - name:                      Building rust-stable
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         if:                        github.ref == 'refs/heads/master'
         with:
           command:                 build
@@ -64,11 +64,11 @@ jobs:
       RUST_BACKTRACE:              full
     steps:
       - name:                      Cancel Previous Runs
-        uses:                      styfle/cancel-workflow-action@0.4.1
+        uses:                      styfle/cancel-workflow-action@43da6c68d1f8edfdd25e3a96440e733723d533f6 # 0.4.1
         with:
           access_token:            ${{ github.token }}
       - name:                      Checkout sources & submodules
-        uses:                      actions/checkout@master
+        uses:                      actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
         with:
           fetch-depth:             5
           submodules:              recursive
@@ -76,19 +76,19 @@ jobs:
         run:                       rustup target add wasm32-unknown-unknown --toolchain stable && cargo install wasm-bindgen-cli
 ## Check Stage
       - name:                      Checking wasm32
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --target wasm32-unknown-unknown --no-default-features --features eip-1193
       - name:                      Checking wasm32 with http
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --target wasm32-unknown-unknown --no-default-features --features http,wasm
       - name:                      Testing wasm32
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                test
           toolchain:              stable
@@ -101,71 +101,71 @@ jobs:
       RUST_BACKTRACE:              full
     steps:
       - name:                      Cancel Previous Runs
-        uses:                      styfle/cancel-workflow-action@0.4.1
+        uses:                      styfle/cancel-workflow-action@43da6c68d1f8edfdd25e3a96440e733723d533f6 # 0.4.1
         with:
           access_token:            ${{ github.token }}
       - name:                      Checkout sources & submodules
-        uses:                      actions/checkout@master
+        uses:                      actions/checkout@61b9e3751b92087fd0b06925ba6dd6314e06f089 # master
         with:
           fetch-depth:             5
           submodules:              recursive
 ## Check Stage
       - name:                      Checking without transports
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features
       - name:                      Checking http
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features http
       - name:                      Checking http-tls
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features http-tls
       - name:                      Checking http-native-tls
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features http-native-tls
       - name:                      Checking http-rustls-tls
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features http-rustls-tls
       - name:                      Checking ws-tokio
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features ws-tokio
       - name:                      Checking ws-tls-tokio
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features ws-tls-tokio
       - name:                      Checking ws-async-std
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features ws-async-std
       - name:                      Checking ws-tls-async-std
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
           args:                    --no-default-features --features ws-tls-async-std
       - name:                      Checking ipc-tokio
-        uses:                      actions-rs/cargo@master
+        uses:                      actions-rs/cargo@9e120dd99b0fbad1c065f686657e914e76bd7b72 # master
         with:
           command:                 check
           toolchain:               stable
